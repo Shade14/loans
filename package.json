@@ -1,5 +1,5 @@
 {
-  "name": "workflow",
+  "name": "loans",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shade14/workflow.git"
+    "url": "git+https://github.com/Shade14/loans.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Shade14/workflow/issues"
+    "url": "https://github.com/Shade14/loans/issues"
   },
-  "homepage": "https://github.com/Shade14/workflow#readme",
+  "homepage": "https://github.com/Shade14/loans#readme",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
