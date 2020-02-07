@@ -1,8 +1,40 @@
 <!doctype html>
 <html lang="en">
-    <!-- partial:partials/_header.html -->
-  	<!-- partial -->
+
+  <!-- partial:partials/_header.html -->
+  <!-- partial -->
+  <style media="screen">
+    #mymap {
+      position: fixed;
+      height: 400px;
+      width: 500px;
+      display: none;
+    }
+
+  </style>
   <body>
 
+    <div class="container mt-3">
+      <div class="row d-flex">
+        <p class="col-9">We offer loans from <span class="sign">$</span><span class="minLoan">22.5</span> million to <span class="sign">$</span><span class="maxLoan">500</span> million.</p>
+
+        <div class="dropdown col-2">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Currency
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item eur" href="#">Euro</a>
+            <a class="dropdown-item cad" href="#">Canadian Dollars</a>
+            <a class="dropdown-item usd" href="#">American Dollars</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mymap"></div>
+
+    <script src="js/index.js"></script>
+
   </body>
+
 </html>
