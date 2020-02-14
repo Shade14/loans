@@ -11,9 +11,7 @@ import * as Cookies from 'js-cookie';
 var allNum = [];
 var euroExRate = 0.91;
 var cadExRate = 1.32;
-
 var inputs = $('.curNum');
-// console.log(inputs);
 
 for (var i = 0; i < inputs.length; i++) {
   allNum.push(Number(inputs[i].innerText));
@@ -33,33 +31,27 @@ var exchange = {
 
 var change = {
   usd: function() {
-    // e.preventDefault();
     $.each(allNum, function(index, value) {
       var numUsd = exchange.exToUsd(value);
       inputs[index].innerText = numUsd;
     });
     $('.curSign').text('$');
-    // Cookies.remove('currency');
     Cookies.set('currency', 'usd', { expires: 365 });
   },
   cad: function() {
-    // e.preventDefault();
     $.each(allNum, function(index, value) {
       var numCad = exchange.exToCad(value);
       inputs[index].innerText = numCad.toFixed(2);
     });
     $('.curSign').text('CA$');
-    // Cookies.remove('currency');
     Cookies.set('currency', 'cad', { expires: 365 });
   },
   eur: function() {
-    // e.preventDefault();
     $.each(allNum, function(index, value) {
       var numEur = exchange.exToEur(value);
       inputs[index].innerText = numEur.toFixed(2);
     });
     $('.curSign').text('€');
-    // Cookies.remove('currency');
     Cookies.set('currency', 'eur', { expires: 365 });
   }
 };
@@ -67,7 +59,6 @@ var change = {
 
 $(document).ready(function(e) {
 
-  // e.preventDefault();
   if (!Cookies.get('currency')) {
     change.usd();
     map.on('locationfound', location.onLocationFound);
@@ -100,12 +91,10 @@ $(document).ready(function(e) {
 
   var location = {
     onLocationFound: function(e) {
-      // e.preventDefault();
       var latitude = e.latlng.lat;
       var longitude = e.latlng.lng;
       $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+ latitude +'&lon=' + longitude, function(data) {
         var found = country.findByName(data.address.country);
-        // console.log(found);
         if (found.name === 'Canada') {
           change.cad();
         }
@@ -118,14 +107,10 @@ $(document).ready(function(e) {
       });
     },
     onLocationError: function(e) {
-      // e.preventDefault();
       alert(e.message);
       change.usd();
     }
   };
-
-  // map.on('locationfound', location.onLocationFound);
-  // map.on('locationerror', location.onLocationError);
 
   //dropdown-----------------
   //change to euro
