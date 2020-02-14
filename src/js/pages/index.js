@@ -70,6 +70,8 @@ $(document).ready(function(e) {
   // e.preventDefault();
   if (!Cookies.get('currency')) {
     change.usd();
+    map.on('locationfound', location.onLocationFound);
+    map.on('locationerror', location.onLocationError);
   }
   else if (Cookies.get('currency') === 'usd') {
     change.usd();
@@ -122,8 +124,8 @@ $(document).ready(function(e) {
     }
   };
 
-  map.on('locationfound', location.onLocationFound);
-  map.on('locationerror', location.onLocationError);
+  // map.on('locationfound', location.onLocationFound);
+  // map.on('locationerror', location.onLocationError);
 
   //dropdown-----------------
   //change to euro
