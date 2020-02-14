@@ -7,43 +7,53 @@ import 'bootstrap';
 import * as L from 'leaflet';
 import country from 'country-list-js';
 
-var minUsd = 22.5;
-var maxUsd = 500;
-var minEur, maxEur, minCad, maxCad;
+var allNum = [];
 var euroExRate = 0.91;
 var cadExRate = 1.32;
 
+var inputs = $('.curNum');
+console.log(inputs);
+
+for (var i = 0; i < inputs.length; i++) {
+  allNum.push(Number(inputs[i].innerText));
+}
+
 var exchange = {
-  exToEuro: function(val) {
+  exToEur: function(val) {
     return val * euroExRate;
   },
   exToCad: function(val) {
     return val * cadExRate;
+  },
+  exToUsd: function(val) {
+    return val;
   }
 };
 
 var change = {
   usd: function() {
     // e.preventDefault();
-    $('.minLoan').text(minUsd);
-    $('.maxLoan').text(maxUsd);
-    $('.sign').text('$');
+    $.each(allNum, function(index, value) {
+      var numUsd = exchange.exToUsd(value);
+      inputs[index].innerText = numUsd;
+    });
+    $('.curSign').text('$');
   },
   cad: function() {
     // e.preventDefault();
-    minCad = exchange.exToCad(minUsd);
-    maxCad = exchange.exToCad(maxUsd);
-    $('.minLoan').text(minCad.toFixed(2));
-    $('.maxLoan').text(maxCad.toFixed(2));
-    $('.sign').text('CA$');
+    $.each(allNum, function(index, value) {
+      var numCad = exchange.exToCad(value);
+      inputs[index].innerText = numCad.toFixed(2);
+    });
+    $('.curSign').text('CA$');
   },
   eur: function() {
     // e.preventDefault();
-    minEur = exchange.exToEuro(minUsd);
-    maxEur = exchange.exToEuro(maxUsd);
-    $('.minLoan').text(minEur.toFixed(2));
-    $('.maxLoan').text(maxEur.toFixed(2));
-    $('.sign').text('€');
+    $.each(allNum, function(index, value) {
+      var numEur = exchange.exToEur(value);
+      inputs[index].innerText = numEur;
+    });
+    $('.curSign').text('€');
   }
 };
 
@@ -94,12 +104,12 @@ $(document).ready(function(e) {
 
   //dropdown-----------------
   //change to euro
-  $('.eur').on('click', change.eur);
+  $('.eur').on('click', change.eur());
 
   //change to cad
-  $('.cad').on('click', change.cad);
+  $('.cad').on('click', change.cad());
 
   //change to usd
-  $('.usd').on('click', change.usd);
+  $('.usd').on('click', change.usd());
 
 });
