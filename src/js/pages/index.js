@@ -6,13 +6,14 @@ import 'popper.js';
 import 'bootstrap';
 import * as L from 'leaflet';
 import country from 'country-list-js';
+import * as Cookies from 'js-cookie';
 
 var allNum = [];
 var euroExRate = 0.91;
 var cadExRate = 1.32;
 
 var inputs = $('.curNum');
-console.log(inputs);
+// console.log(inputs);
 
 for (var i = 0; i < inputs.length; i++) {
   allNum.push(Number(inputs[i].innerText));
@@ -38,6 +39,8 @@ var change = {
       inputs[index].innerText = numUsd;
     });
     $('.curSign').text('$');
+    // Cookies.remove('currency');
+    Cookies.set('currency', 'usd', { expires: 365 });
   },
   cad: function() {
     // e.preventDefault();
@@ -46,19 +49,37 @@ var change = {
       inputs[index].innerText = numCad.toFixed(2);
     });
     $('.curSign').text('CA$');
+    // Cookies.remove('currency');
+    Cookies.set('currency', 'cad', { expires: 365 });
   },
   eur: function() {
     // e.preventDefault();
     $.each(allNum, function(index, value) {
       var numEur = exchange.exToEur(value);
-      inputs[index].innerText = numEur;
+      inputs[index].innerText = numEur.toFixed(2);
     });
     $('.curSign').text('€');
+    // Cookies.remove('currency');
+    Cookies.set('currency', 'eur', { expires: 365 });
   }
 };
 
 
 $(document).ready(function(e) {
+
+  // e.preventDefault();
+  if (!Cookies.get('currency')) {
+    change.usd();
+  }
+  else if (Cookies.get('currency') === 'usd') {
+    change.usd();
+  }
+  else if (Cookies.get('currency') === 'cad') {
+    change.cad();
+  }
+  else if (Cookies.get('currency') === 'eur') {
+    change.eur();
+  }
 
   var map = L.map('mymap').setView([0, 0], 1);
   var url = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
@@ -77,6 +98,7 @@ $(document).ready(function(e) {
 
   var location = {
     onLocationFound: function(e) {
+      // e.preventDefault();
       var latitude = e.latlng.lat;
       var longitude = e.latlng.lng;
       $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+ latitude +'&lon=' + longitude, function(data) {
@@ -94,6 +116,7 @@ $(document).ready(function(e) {
       });
     },
     onLocationError: function(e) {
+      // e.preventDefault();
       alert(e.message);
       change.usd();
     }
@@ -104,12 +127,12 @@ $(document).ready(function(e) {
 
   //dropdown-----------------
   //change to euro
-  $('.eur').on('click', change.eur());
+  $('.eur').on('click', change.eur);
 
   //change to cad
-  $('.cad').on('click', change.cad());
+  $('.cad').on('click', change.cad);
 
   //change to usd
-  $('.usd').on('click', change.usd());
+  $('.usd').on('click', change.usd);
 
 });
